@@ -24,3 +24,6 @@ class ItemService:
     async def get_items_of_user(self, user_uuid: UUID) -> list[UserItem]:
         user_items_db = await self.get_items_of_user(user_uuid)
         return [user_item_dbdto_to_dto(user_item_db) for user_item_db in user_items_db]
+
+    async def give_item_to_user(self, item_id: int, user_uuid: UUID) -> bool:
+        return await self.item_repo.give_item_to_user(item_id=item_id, user_uuid=user_uuid)
