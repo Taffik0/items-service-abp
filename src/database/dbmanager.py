@@ -18,5 +18,19 @@ async def load():
     )
     print(db_pool)
 
+
 async def close():
     await db_pool.close()
+
+
+def get_pool() -> Pool:
+    if not db_pool:
+        logger.error(
+            "dbmanager not loaded db_pool is None. Use -> await load() <- to load db")
+        raise Exception()
+    return db_pool
+
+
+async def get_conn() -> Connection:
+    async with get_pool().acquire() as conn:
+        yield conn
